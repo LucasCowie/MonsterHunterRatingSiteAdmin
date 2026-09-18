@@ -1,4 +1,4 @@
-# Monster Hunter Rating Site Admin
+# Monster Hunter Rating Site
 
 This is a Monster Hunter rating site. It owns the actual monster data: name, species, elemental weakness, threat rank, and the aggregate rating each monster has picked up.
 
