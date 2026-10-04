@@ -1,4 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("MonsterHunterRatingSiteAdminContext") ?? throw new InvalidOperationException("Connection string 'MonsterHunterRatingSiteAdminContext' not found.");
+
+builder.Services.AddDbContext<MonsterHunterRatingSiteAdminContext>(options => options.UseSqlServer(connectionString));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

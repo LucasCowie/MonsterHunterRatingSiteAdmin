@@ -1,4 +1,4 @@
-# Monster Hunter Rating Site
+# Monster Hunter Rating Site Admin
 
 This is a Monster Hunter rating site. It owns the actual monster data: name, species, elemental weakness, threat rank, and the aggregate rating each monster has picked up.
 
@@ -6,7 +6,7 @@ This is a Monster Hunter rating site. It owns the actual monster data: name, spe
 
 The plan is to split the rating site into two halves that can grow on their own:
 
-- **The admin part** is where the monster catalog lives and gets maintained. It's the source of truth for what monsters exist and what data is attached to each one.
+- **The admin app part** is where the monster catalog lives and gets maintained. It's the source of truth for what monsters exist and what data is attached to each one.
 - **A public-facing part** (not built yet) would be the part hunters actually use, browsing monsters, checking weaknesses before a hunt, and leaving their own ratings. It would read from the same catalog this admin part maintains, and eventually feed back the rating totals this app currently seeds by hand.
 
 ## Features
@@ -50,8 +50,7 @@ MonsterHunterRatingSiteAdmin/
 ```
 
 ## Roadmap
-
-- [ ] Data Structures for the monsters
+- [ ] Data structure for the monsters
 - [ ] Images for each monster
 - [ ] The actual public-facing rating site that reads from this catalog
 - [ ] Search and filtering by species/weakness

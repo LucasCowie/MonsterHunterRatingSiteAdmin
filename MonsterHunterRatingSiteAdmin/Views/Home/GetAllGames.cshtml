@@ -1,0 +1,23 @@
+﻿@model List<MonsterHunterRatingSiteAdmin.Models.Game>
+@{
+    ViewData["Title"] = "Games";
+}
+<h1>Games</h1>
+
+@foreach (var game in Model)
+{
+    <div class="game">
+        <h2>@game.Title</h2>
+        <p>
+            @game.Description
+            <br />
+            @game.Generation
+            <br />
+            @game.Console
+            <br />
+            Number of Monster in this game: @game.NumMonster
+            <br />
+            Released @game.ReleaseDate.ToString("MMMM d, yyyy")
+        </p>
+    </div>
+}
