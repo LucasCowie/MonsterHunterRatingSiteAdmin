@@ -55,6 +55,20 @@ h1, h2, h3, h4 {
   letter-spacing: 0.08em;
 }
 
+.mh-navbar .navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Logo is black on white: invert it, then "screen" blend so the (now black) background disappears into the navbar */
+.navbar-logo {
+  height: 40px;
+  width: auto;
+  filter: invert(1);
+  mix-blend-mode: screen;
+}
+
 .mh-navbar .nav-link {
   color: var(--mh-text);
   padding: 0.5rem 1rem;
@@ -160,6 +174,18 @@ h1, h2, h3, h4 {
   background: var(--mh-bg);
   border: 1px solid var(--mh-border);
   color: var(--mh-text);
+}
+
+.form-select {
+  background-color: var(--mh-bg);
+  border: 1px solid var(--mh-border);
+  color: var(--mh-text);
+}
+
+.form-select:focus {
+  background-color: var(--mh-bg);
+  color: var(--mh-text);
+  border-color: var(--mh-accent);
 }
 
 .form-control:focus {
