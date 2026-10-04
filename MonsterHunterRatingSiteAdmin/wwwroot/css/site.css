@@ -1,5 +1,19 @@
+:root {
+  --mh-bg: #14110f;
+  --mh-surface: #1f1a17;
+  --mh-surface-2: #2a231f;
+  --mh-border: #3b312b;
+  --mh-text: #e9e1d8;
+  --mh-muted: #9c8f83;
+  --mh-accent: #e0892b;
+  --mh-accent-hover: #f1a04a;
+  --mh-danger: #d9503f;
+}
+
 html {
   font-size: 14px;
+  position: relative;
+  min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -8,17 +22,192 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
   margin-bottom: 60px;
+  background: var(--mh-bg);
+  color: var(--mh-text);
+}
+
+a {
+  color: var(--mh-accent);
+}
+
+a:hover {
+  color: var(--mh-accent-hover);
+}
+
+h1, h2, h3, h4 {
+  color: var(--mh-text);
+  letter-spacing: 0.02em;
+}
+
+/* Navbar */
+.mh-navbar {
+  background: var(--mh-surface);
+  border-bottom: 2px solid var(--mh-accent);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.mh-navbar .navbar-brand {
+  color: var(--mh-accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.mh-navbar .nav-link {
+  color: var(--mh-text);
+  padding: 0.5rem 1rem;
+  border-bottom: 2px solid transparent;
+}
+
+.mh-navbar .nav-link:hover {
+  color: var(--mh-accent-hover);
+  border-bottom-color: var(--mh-accent);
+}
+
+.mh-navbar .navbar-toggler {
+  border-color: var(--mh-border);
+  filter: invert(1);
+}
+
+/* Page header */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--mh-border);
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+/* Cards */
+.mh-card {
+  background: var(--mh-surface);
+  border: 1px solid var(--mh-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.mh-card-danger {
+  border-left: 4px solid var(--mh-danger);
+}
+
+.table-card {
+  background: var(--mh-surface);
+  border: 1px solid var(--mh-border);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+/* Table */
+.mh-table {
+  --bs-table-bg: transparent;
+  --bs-table-color: var(--mh-text);
+  --bs-table-border-color: var(--mh-border);
+  --bs-table-hover-bg: var(--mh-surface-2);
+  --bs-table-hover-color: var(--mh-text);
+  margin-bottom: 0;
+}
+
+.mh-table thead th {
+  background: var(--mh-surface-2);
+  color: var(--mh-accent);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  border-bottom: 2px solid var(--mh-accent);
+  white-space: nowrap;
+}
+
+/* Details lists */
+.mh-details dt {
+  color: var(--mh-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  padding-top: 0.6rem;
+}
+
+.mh-details dd {
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--mh-border);
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.control-label {
+  color: var(--mh-muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.form-control {
+  background: var(--mh-bg);
+  border: 1px solid var(--mh-border);
+  color: var(--mh-text);
+}
+
+.form-control:focus {
+  background: var(--mh-bg);
+  color: var(--mh-text);
+  border-color: var(--mh-accent);
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(224, 137, 43, 0.35);
+}
+
+.text-danger {
+  color: var(--mh-danger) !important;
+}
+
+/* Buttons */
+.btn-primary {
+  --bs-btn-bg: var(--mh-accent);
+  --bs-btn-border-color: var(--mh-accent);
+  --bs-btn-color: #1a120a;
+  --bs-btn-hover-bg: var(--mh-accent-hover);
+  --bs-btn-hover-border-color: var(--mh-accent-hover);
+  --bs-btn-hover-color: #1a120a;
+  --bs-btn-active-bg: var(--mh-accent-hover);
+  --bs-btn-active-border-color: var(--mh-accent-hover);
+  --bs-btn-active-color: #1a120a;
+  font-weight: 600;
+}
+
+.back-link {
+  color: var(--mh-muted);
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: var(--mh-accent-hover);
+}
+
+/* Footer */
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  line-height: 60px;
+  background: var(--mh-surface);
+  border-top: 1px solid var(--mh-border);
+  color: var(--mh-muted);
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {

@@ -4,71 +4,59 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<div class="page-header">
+    <h1>Delete Game</h1>
+</div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>MonsterHunterRatingSiteAdmin.Models.Game</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
+<div class="mh-card mh-card-danger">
+    <h4 class="mb-3">Are you sure you want to delete this?</h4>
+    <dl class="row mh-details">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Title)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Title)
         </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.GameIcon)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.GameIcon)
         </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Description)
         </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Generation)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Generation)
         </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.Console)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.Console)
         </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.NumMonster)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.NumMonster)
         </dd>
-    </dl>
-    <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-3">
             @Html.DisplayNameFor(model => model.ReleaseDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-9">
             @Html.DisplayFor(model => model.ReleaseDate)
         </dd>
     </dl>
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a class="back-link ms-3" asp-action="Index">&larr; Back to List</a>
     </form>
 </div>
