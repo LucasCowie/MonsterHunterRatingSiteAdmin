@@ -1,15 +1,17 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MonsterHunterRatingSiteAdmin.Models;
+using MonsterHunterRatingSiteAdmin.Services;
 
 public class GamesController : Controller
 {
     private readonly MonsterHunterRatingSiteAdminContext _context;
+    private readonly IAzureBlobService _blobService;
 
-    public GamesController(MonsterHunterRatingSiteAdminContext context)
+    public GamesController(MonsterHunterRatingSiteAdminContext context, IAzureBlobService blobService)
     {
         _context = context;
+        _blobService = blobService;
     }
 
     // GET: GAMES
@@ -47,8 +49,19 @@ public class GamesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Title,GameIcon,Description,Generation,Console,NumMonster,ReleaseDate")] Game game)
+    public async Task<IActionResult> Create([Bind("Id,Title,GameIcon,Description,Generation,Console,NumMonster,ReleaseDate")] Game game, IFormFile? imageFile)
     {
+        ModelState.Remove("GameIcon");
+        if (imageFile == null || imageFile.Length == 0)
+        {
+            ModelState.AddModelError("GameIcon", "Please select a game icon");
+        }
+        else
+        {
+            string extension = Path.GetExtension(imageFile.FileName);
+            string filename = $"{Guid.NewGuid()}{extension}";
+            game.GameIcon = await _blobService.UploadFileAsync(imageFile, filename);
+        }
         if (ModelState.IsValid)
         {
             _context.Add(game);
