@@ -29,21 +29,21 @@ namespace MonsterHunterRatingSiteAdmin.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Console")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("GameConsoleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("GameIcon")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("Generation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("GenerationId")
+                        .HasColumnType("int");
 
                     b.Property<int>("NumMonster")
                         .HasColumnType("int");
@@ -53,11 +53,81 @@ namespace MonsterHunterRatingSiteAdmin.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("GameConsoleId");
+
+                    b.HasIndex("GenerationId");
+
                     b.ToTable("Game");
+                });
+
+            modelBuilder.Entity("MonsterHunterRatingSiteAdmin.Models.GameConsole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GameConsole");
+                });
+
+            modelBuilder.Entity("MonsterHunterRatingSiteAdmin.Models.Generation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Generation");
+                });
+
+            modelBuilder.Entity("MonsterHunterRatingSiteAdmin.Models.Game", b =>
+                {
+                    b.HasOne("MonsterHunterRatingSiteAdmin.Models.GameConsole", "GameConsole")
+                        .WithMany("Games")
+                        .HasForeignKey("GameConsoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MonsterHunterRatingSiteAdmin.Models.Generation", "Generation")
+                        .WithMany("Games")
+                        .HasForeignKey("GenerationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GameConsole");
+
+                    b.Navigation("Generation");
+                });
+
+            modelBuilder.Entity("MonsterHunterRatingSiteAdmin.Models.GameConsole", b =>
+                {
+                    b.Navigation("Games");
+                });
+
+            modelBuilder.Entity("MonsterHunterRatingSiteAdmin.Models.Generation", b =>
+                {
+                    b.Navigation("Games");
                 });
 #pragma warning restore 612, 618
         }

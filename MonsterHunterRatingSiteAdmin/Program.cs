@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MonsterHunterRatingSiteAdmin.Services;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("MonsterHunterRatingSiteAdminContext") ?? throw new InvalidOperationException("Connection string 'MonsterHunterRatingSiteAdminContext' not found.");
 
@@ -6,6 +7,7 @@ builder.Services.AddDbContext<MonsterHunterRatingSiteAdminContext>(options => op
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IAzureBlobService, AzureBlobService>();
 
 var app = builder.Build();
 

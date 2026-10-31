@@ -1,21 +1,24 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using MonsterHunterRatingSiteAdmin.Models;
+using MonsterHunterRatingSiteAdmin.Services;
 
 public class GamesController : Controller
 {
     private readonly MonsterHunterRatingSiteAdminContext _context;
+    private readonly IAzureBlobService _blobService;
 
-    public GamesController(MonsterHunterRatingSiteAdminContext context)
+    public GamesController(MonsterHunterRatingSiteAdminContext context, IAzureBlobService blobService)
     {
         _context = context;
+        _blobService = blobService;
     }
 
     // GET: GAMES
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index()
     {
-        return View(await _context.Game.ToListAsync());
+        return View(await _context.Game.Include(g => g.Generation).Include(g => g.GameConsole).ToListAsync());
     }
 
     // GET: GAMES/Details/5
@@ -27,6 +30,7 @@ public class GamesController : Controller
         }
 
         var game = await _context.Game
+            .Include(g => g.Generation).Include(g => g.GameConsole)
             .FirstOrDefaultAsync(m => m.Id == id);
         if (game == null)
         {
@@ -39,22 +43,35 @@ public class GamesController : Controller
     // GET: GAMES/Create
     public IActionResult Create()
     {
+        ViewBag.GenerationId = new SelectList(_context.Generation, "Id", "Name");
+        ViewBag.GameConsoleId = new SelectList(_context.GameConsole, "Id", "Name");
         return View();
     }
 
     // POST: GAMES/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Title,GameIcon,Description,Generation,Console,NumMonster,ReleaseDate")] Game game)
+    public async Task<IActionResult> Create([Bind("Id,Title,GameIcon,Description,GenerationId,GameConsoleId,NumMonster,ReleaseDate")] Game game, IFormFile? imageFile)
     {
+        ModelState.Remove("GameIcon");
+        if (imageFile == null || imageFile.Length == 0)
+        {
+            ModelState.AddModelError("GameIcon", "Please select a game icon");
+        }
+        else
+        {
+            string extension = Path.GetExtension(imageFile.FileName);
+            string filename = $"{Guid.NewGuid()}{extension}";
+            game.GameIcon = await _blobService.UploadFileAsync(imageFile, filename);
+        }
         if (ModelState.IsValid)
         {
             _context.Add(game);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        ViewBag.GenerationId = new SelectList(_context.Generation, "Id", "Name", game.GenerationId);
+        ViewBag.GameConsoleId = new SelectList(_context.GameConsole, "Id", "Name", game.GameConsoleId);
         return View(game);
     }
 
@@ -71,15 +88,15 @@ public class GamesController : Controller
         {
             return NotFound();
         }
+        ViewBag.GenerationId = new SelectList(_context.Generation, "Id", "Name", game.GenerationId);
+        ViewBag.GameConsoleId = new SelectList(_context.GameConsole, "Id", "Name", game.GameConsoleId);
         return View(game);
     }
 
     // POST: GAMES/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,GameIcon,Description,Generation,Console,NumMonster,ReleaseDate")] Game game)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,GameIcon,Description,GenerationId,GameConsoleId,NumMonster,ReleaseDate")] Game game)
     {
         if (id != game.Id)
         {
@@ -106,6 +123,8 @@ public class GamesController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
+        ViewBag.GenerationId = new SelectList(_context.Generation, "Id", "Name", game.GenerationId);
+        ViewBag.GameConsoleId = new SelectList(_context.GameConsole, "Id", "Name", game.GameConsoleId);
         return View(game);
     }
 
@@ -118,6 +137,7 @@ public class GamesController : Controller
         }
 
         var game = await _context.Game
+            .Include(g => g.Generation).Include(g => g.GameConsole)
             .FirstOrDefaultAsync(m => m.Id == id);
         if (game == null)
         {

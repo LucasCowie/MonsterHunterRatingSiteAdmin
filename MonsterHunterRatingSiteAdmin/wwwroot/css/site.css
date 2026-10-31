@@ -61,7 +61,7 @@ h1, h2, h3, h4 {
   gap: 0.6rem;
 }
 
-/* Logo is black on white: invert it, then "screen" blend so the (now black) background disappears into the navbar */
+/* Logo is black on white: invert it, then "screen" blend so the background disappears into the navbar */
 .navbar-logo {
   height: 40px;
   width: auto;
