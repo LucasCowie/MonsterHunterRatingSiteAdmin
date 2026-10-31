@@ -1,0 +1,39 @@
+@model IEnumerable<MonsterHunterRatingSiteAdmin.Models.GameConsole>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="page-header">
+    <h1>Manage Game Consoles</h1>
+    <a asp-action="Create" class="btn btn-primary">+ Add Game Console</a>
+</div>
+<div class="table-card">
+<table class="table table-hover align-middle mh-table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="text-nowrap">
+                <a class="btn btn-sm btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <a class="btn btn-sm btn-outline-light" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+<div class="mt-3">
+    <a class="back-link" asp-controller="Games" asp-action="Index">&larr; Back to Games</a>
+</div>

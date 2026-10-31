@@ -5,7 +5,11 @@
 }
 
 <div class="page-header">
-    <h1>Manage Games</h1>
+    <div class="d-flex align-items-center gap-3 me-auto">
+        <h1>Manage Games</h1>
+        <a asp-controller="Generations" asp-action="Index" class="btn btn-outline-warning">Manage Generation</a>
+        <a asp-controller="GameConsoles" asp-action="Index" class="btn btn-outline-warning">Manage Game Console</a>
+    </div>
     <a asp-action="Create" class="btn btn-primary">+ Add Game</a>
 </div>
 <div class="table-card">
@@ -25,7 +29,7 @@
                 @Html.DisplayNameFor(model => model.Generation)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Console)
+                    @Html.DisplayNameFor(model => model.GameConsole)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NumMonster)
@@ -49,10 +53,10 @@
                 @Html.DisplayFor(model => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(model => item.Generation)
+                @Html.DisplayFor(model => item.Generation.Name)
             </td>
             <td>
-                @Html.DisplayFor(model => item.Console)
+                @Html.DisplayFor(model => item.GameConsole.Name)
             </td>
             <td>
                 @Html.DisplayFor(model => item.NumMonster)

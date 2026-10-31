@@ -4,6 +4,13 @@ namespace MonsterHunterRatingSiteAdmin.Models
 {
     public class Game
     {
+        [Required(ErrorMessage = "Please select a generation.")]
+        public int GenerationId { get; set; }
+        public Generation? Generation { get; set; }
+
+        [Required(ErrorMessage = "Please select a console.")]
+        public int GameConsoleId { get; set; }
+        public GameConsole? GameConsole { get; set; }
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Please enter the game's title.")]
@@ -20,16 +27,16 @@ namespace MonsterHunterRatingSiteAdmin.Models
         [StringLength(1000, MinimumLength = 10, ErrorMessage = "Description must be between 10 and 1000 characters.")]
         public string Description { get; set; } = string.Empty; //Little description of the game
 
-        [Required(ErrorMessage = "Please select a generation.")]
-        [AllowedValues("1st Generation", "2nd Generation", "3rd Generation", "4th Generation", "5th Generation", "6th Generation",
-            ErrorMessage = "Please select a generation from the list.")]
-        public string Generation { get; set; } = string.Empty; //The Devlmepot period the game was made in
+        //[Required(ErrorMessage = "Please select a generation.")]
+        //[AllowedValues("1st Generation", "2nd Generation", "3rd Generation", "4th Generation", "5th Generation", "6th Generation",
+        //    ErrorMessage = "Please select a generation from the list.")]
+        //public string Generation { get; set; } = string.Empty; //The Devlmepot period the game was made in
 
-        [Required(ErrorMessage = "Please select a console.")]
-        [AllowedValues("PlayStation 2", "PlayStation Portable", "Wii", "Nintendo 3DS", "Wii U", "PlayStation 4", "Xbox One",
-            "Nintendo Switch", "Nintendo Switch 2", "PlayStation 5", "Xbox Series X|S", "PC",
-            ErrorMessage = "Please select a console from the list.")]
-        public string Console { get; set; } = string.Empty; //The console the game was insinally made for
+        //[Required(ErrorMessage = "Please select a console.")]
+        //[AllowedValues("PlayStation 2", "PlayStation Portable", "Wii", "Nintendo 3DS", "Wii U", "PlayStation 4", "Xbox One",
+        //    "Nintendo Switch", "Nintendo Switch 2", "PlayStation 5", "Xbox Series X|S", "PC",
+        //    ErrorMessage = "Please select a console from the list.")]
+        //public string Console { get; set; } = string.Empty; //The console the game was insinally made for
 
         [Display(Name = "Number of Monsters")]
         [Range(1, 500, ErrorMessage = "Number of monsters must be between 1 and 500.")]

@@ -31,19 +31,19 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Generation" class="control-label"></label>
-                <select asp-for="Generation" class="form-select" asp-items="MonsterHunterRatingSiteAdmin.Models.GameOptions.GenerationItems">
+                <label asp-for="GenerationId" class="control-label"></label>
+                <select asp-for="GenerationId" class="form-select" asp-items="ViewBag.GenerationId">
                     <option value="">-- Select generation --</option>
                 </select>
-                <span asp-validation-for="Generation" class="text-danger"></span>
+                <span asp-validation-for="GenerationId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="Console" class="control-label"></label>
-                <select asp-for="Console" class="form-select" asp-items="MonsterHunterRatingSiteAdmin.Models.GameOptions.ConsoleItems">
+                <label asp-for="GameConsoleId" class="control-label"></label>
+                <select asp-for="GameConsoleId" class="form-select" asp-items="ViewBag.GameConsoleId">
                     <option value="">-- Select console --</option>
                 </select>
-                <span asp-validation-for="Console" class="text-danger"></span>
+                <span asp-validation-for="GameConsoleId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
