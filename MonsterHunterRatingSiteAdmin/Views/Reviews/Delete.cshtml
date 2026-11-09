@@ -1,0 +1,38 @@
+@model MonsterHunterRatingSiteAdmin.Models.ReviewGame
+
+@{
+    ViewData["Title"] = "Delete Review";
+}
+
+<div class="page-header">
+    <h1>Delete Review</h1>
+</div>
+
+<div class="mh-card mh-card-danger">
+    <h4 class="mb-3">Are you sure you want to delete this draft?</h4>
+    <dl class="row mh-details">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.GameId)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Game!.Title)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Rating / 5
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a class="back-link ms-3" asp-action="Index">&larr; Back to My Reviews</a>
+    </form>
+</div>

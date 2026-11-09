@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using MonsterHunterRatingSiteAdmin.Models;
 using MonsterHunterRatingSiteAdmin.Services;
 
+// Critics can browse games; only administrators can change them
+[Authorize(Roles = "administrator,critic")]
 public class GamesController : Controller
 {
     private readonly MonsterHunterRatingSiteAdminContext _context;
@@ -37,10 +40,12 @@ public class GamesController : Controller
             return NotFound();
         }
 
+        ViewBag.PublishedReviewCount = await _context.ReviewGame.CountAsync(r => r.GameId == id && r.IsPublished);
         return View(game);
     }
 
     // GET: GAMES/Create
+    [Authorize(Roles = "administrator")]
     public IActionResult Create()
     {
         ViewBag.GenerationId = new SelectList(_context.Generation, "Id", "Name");
@@ -49,6 +54,7 @@ public class GamesController : Controller
     }
 
     // POST: GAMES/Create
+    [Authorize(Roles = "administrator")]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Id,Title,GameIcon,Description,GenerationId,GameConsoleId,NumMonster,ReleaseDate")] Game game, IFormFile? imageFile)
@@ -76,6 +82,7 @@ public class GamesController : Controller
     }
 
     // GET: GAMES/Edit/5
+    [Authorize(Roles = "administrator")]
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
@@ -94,13 +101,23 @@ public class GamesController : Controller
     }
 
     // POST: GAMES/Edit/5
+    [Authorize(Roles = "administrator")]
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,GameIcon,Description,GenerationId,GameConsoleId,NumMonster,ReleaseDate")] Game game)
+    public async Task<IActionResult> Edit(int? id, [Bind("Id,Title,GameIcon,Description,GenerationId,GameConsoleId,NumMonster,ReleaseDate")] Game game, IFormFile? imageFile)
     {
         if (id != game.Id)
         {
             return NotFound();
+        }
+
+        // No new file keeps the existing poster URL posted from the hidden field
+        if (imageFile != null && imageFile.Length > 0)
+        {
+            string extension = Path.GetExtension(imageFile.FileName);
+            string filename = $"{Guid.NewGuid()}{extension}";
+            game.GameIcon = await _blobService.UploadFileAsync(imageFile, filename);
+            ModelState.Remove("GameIcon");
         }
 
         if (ModelState.IsValid)
@@ -129,6 +146,7 @@ public class GamesController : Controller
     }
 
     // GET: GAMES/Delete/5
+    [Authorize(Roles = "administrator")]
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)
@@ -148,6 +166,7 @@ public class GamesController : Controller
     }
 
     // POST: GAMES/Delete/5
+    [Authorize(Roles = "administrator")]
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int? id)

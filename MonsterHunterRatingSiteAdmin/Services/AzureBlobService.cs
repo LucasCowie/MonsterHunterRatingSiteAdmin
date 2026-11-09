@@ -38,6 +38,9 @@ namespace MonsterHunterRatingSiteAdmin.Services
                     _containerName
                 );
 
+            // Public blob access so <img> tags can load posters directly
+            await containerClient.CreateIfNotExistsAsync(PublicAccessType.Blob);
+
             var blobClient =
                 containerClient.GetBlobClient(filename);
 

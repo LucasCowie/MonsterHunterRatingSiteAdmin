@@ -1,0 +1,51 @@
+@using System.Security.Claims
+@{
+    ViewData["Title"] = "User Profile";
+    // Roles use the custom Auth0 claim type configured in Program.cs, not ClaimTypes.Role
+    var roleClaimType = (User.Identity as ClaimsIdentity)?.RoleClaimType ?? ClaimTypes.Role;
+    var roles = User.FindAll(roleClaimType).Select(c => c.Value).ToList();
+}
+
+<div class="page-header">
+    <h1>User Profile</h1>
+</div>
+
+<div class="mh-card">
+    <div class="row">
+        <div class="col-md-2">
+            <img src="@User.FindFirst("picture")?.Value" alt="Profile picture" class="img-fluid rounded-circle" />
+        </div>
+        <div class="col-md-10">
+            <dl class="row mh-details">
+                <dt class="col-sm-3">Name</dt>
+                <dd class="col-sm-9">@User.Identity?.Name</dd>
+                <dt class="col-sm-3">Email</dt>
+                <dd class="col-sm-9">@User.FindFirst(ClaimTypes.Email)?.Value</dd>
+                <dt class="col-sm-3">User ID</dt>
+                <dd class="col-sm-9">@User.FindFirst(ClaimTypes.NameIdentifier)?.Value</dd>
+                <dt class="col-sm-3">Roles</dt>
+                <dd class="col-sm-9">@(roles.Count > 0 ? string.Join(", ", roles) : "None")</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<div class="table-card mt-4">
+    <table class="table align-middle mh-table">
+        <thead>
+            <tr>
+                <th>Claim Type</th>
+                <th>Claim Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var claim in User.Claims)
+            {
+                <tr>
+                    <td>@claim.Type</td>
+                    <td>@claim.Value</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

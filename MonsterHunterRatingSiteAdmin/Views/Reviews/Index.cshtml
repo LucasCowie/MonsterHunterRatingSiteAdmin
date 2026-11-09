@@ -1,0 +1,74 @@
+@model IEnumerable<MonsterHunterRatingSiteAdmin.Models.ReviewGame>
+
+@{
+    ViewData["Title"] = "My Reviews";
+}
+
+<div class="page-header">
+    <h1>My Reviews</h1>
+    <a asp-action="Create" class="btn btn-primary">+ Write Review</a>
+</div>
+<div class="table-card">
+<table class="table table-hover align-middle mh-table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GameId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Game!.Title)
+            </td>
+            <td>
+                @item.Rating / 5
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @if (item.IsPublished)
+                {
+                    <span class="badge bg-success">Published</span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary">Draft</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td class="text-nowrap">
+                <a class="btn btn-sm btn-outline-light" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                @if (!item.IsPublished)
+                {
+                    <a class="btn btn-sm btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <form asp-action="Publish" asp-route-id="@item.Id" method="post" class="d-inline"
+                          onsubmit="return confirm('Once published, this review can no longer be edited or deleted. Publish?');">
+                        <button type="submit" class="btn btn-sm btn-primary">Publish</button>
+                    </form>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>

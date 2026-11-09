@@ -18,10 +18,10 @@ namespace MonsterHunterRatingSiteAdmin.Models
         public string Title { get; set; } = string.Empty;
 
         [Display(Name = "Game Icon")]
-        [Required(ErrorMessage = "Please enter an icon URL.")]
-        [Url(ErrorMessage = "Game icon must be a valid URL (e.g. https://example.com/icon.png).")]
+        // No [Url]: jQuery Validate rejects 127.0.0.1 (Azurite), and the value is set by the upload, not typed
+        [Required(ErrorMessage = "Please select a game icon.")]
         [StringLength(500, ErrorMessage = "Icon URL can't be longer than 500 characters.")]
-        public string GameIcon { get; set; } = string.Empty; //Url or link to the img for the game
+        public string GameIcon { get; set; } = string.Empty; //Blob storage URL of the uploaded icon
 
         [Required(ErrorMessage = "Please enter a description.")]
         [StringLength(1000, MinimumLength = 10, ErrorMessage = "Description must be between 10 and 1000 characters.")]

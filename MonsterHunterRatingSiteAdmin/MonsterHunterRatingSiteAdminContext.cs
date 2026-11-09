@@ -6,4 +6,5 @@ public class MonsterHunterRatingSiteAdminContext(DbContextOptions<MonsterHunterR
     public DbSet<MonsterHunterRatingSiteAdmin.Models.Game> Game { get; set; } = default!;
     public DbSet<Generation> Generation { get; set; } = default!;
     public DbSet<GameConsole> GameConsole { get; set; } = default!;
+    public DbSet<ReviewGame> ReviewGame { get; set; } = default!;
 }

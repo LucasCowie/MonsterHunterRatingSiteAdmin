@@ -101,6 +101,44 @@ namespace MonsterHunterRatingSiteAdmin.Migrations
                     b.ToTable("Generation");
                 });
 
+            modelBuilder.Entity("MonsterHunterRatingSiteAdmin.Models.ReviewGame", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId", "CreatedBy")
+                        .IsUnique();
+
+                    b.ToTable("ReviewGame");
+                });
+
             modelBuilder.Entity("MonsterHunterRatingSiteAdmin.Models.Game", b =>
                 {
                     b.HasOne("MonsterHunterRatingSiteAdmin.Models.GameConsole", "GameConsole")
@@ -118,6 +156,17 @@ namespace MonsterHunterRatingSiteAdmin.Migrations
                     b.Navigation("GameConsole");
 
                     b.Navigation("Generation");
+                });
+
+            modelBuilder.Entity("MonsterHunterRatingSiteAdmin.Models.ReviewGame", b =>
+                {
+                    b.HasOne("MonsterHunterRatingSiteAdmin.Models.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
                 });
 
             modelBuilder.Entity("MonsterHunterRatingSiteAdmin.Models.GameConsole", b =>
